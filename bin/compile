@@ -243,6 +243,21 @@ prune_devdependencies() {
 header "Pruning devDependencies" | output "$LOG_FILE"
 prune_devdependencies | output "$LOG_FILE"
 
+create_symlinks() {
+  if [ -d ../assets ]; then
+    rm -rf ../assets
+  fi
+  if [ -f ../index.html ]; then
+    rm ../index.html
+  fi
+  ln -s ./bin/assets ../
+  ln -s ./bin/fonts ../
+  ln -s ./bin/index.html ../
+}
+
+header "Creating symlinks" | output "$LOG_FILE"
+create_symlinks | output "$LOG_FILE"
+
 summarize_build() {
   if $NODE_VERBOSE; then
     list_dependencies "$BUILD_DIR"
